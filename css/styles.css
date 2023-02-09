@@ -1,0 +1,487 @@
+/* 
+============
+Variables
+============
+*/
+:root {
+  --primaryColor: #f15025;
+  --mainBlack: #222;
+  --mainWhite: #fff;
+  --offWhite: #f7f7f7;
+  --darkGrey: #afafaf;
+  --mainTransition: all 0.3s linear;
+  --mainSpacing: 0.2rem;
+}
+
+/* 
+============
+Global styles
+============
+*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Fira Code", monospace;
+  color: var(--mainBlack);
+  background: var(--mainWhite);
+  line-height: 1.5;
+}
+a {
+  text-decoration: none;
+}
+img {
+  width: 100%;
+  display: block;
+}
+h1,
+h2,
+h3 {
+  text-transform: capitalize;
+  letter-spacing: var(--mainSpacing);
+  margin-bottom: 1.25rem;
+}
+h1 {
+  font-size: 3rem;
+  font-weight: 400;
+}
+h2 {
+  margin-bottom: 0;
+}
+p {
+  font-weight: 300;
+  font-size: 0.7rem;
+  line-height: 2;
+}
+.btn {
+  display: inline-block;
+  padding: 0.5rem;
+  text-transform: capitalize;
+  border: 3px solid var(--primaryColor);
+  color: var(--primaryColor);
+  margin: 3rem;
+  transition: var(--mainTransition);
+}
+.btn:hover {
+  background: var(--primaryColor);
+  color: var(--mainWhite);
+}
+
+/* 
+============
+Main Navbar
+============
+*/
+/* schermi piccoli */
+.main-navbar {
+  background: var(--darkGrey);
+  padding: 0 2rem;
+}
+
+.main-navbar li {
+  list-style: none;
+}
+
+.main-navbar a {
+  text-transform: capitalize;
+  display: block;
+  padding: 1rem 0;
+  color: var(--primaryColor);
+  letter-spacing: var(--mainSpacing);
+  transition: var(--mainTransition);
+}
+
+.main-navbar a:hover {
+  color: var(--mainBlack);
+}
+
+/* da schermi medi */
+@media screen and (min-width: 992px) {
+  .main-navbar ul {
+    /* per evitare spanning, non diventa più largo di 1170px */
+    max-width: 1170px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .main-navbar a {
+    text-align: center;
+  }
+}
+
+/* 
+============
+Hero Styles
+============
+*/
+.hero-header {
+  min-height: 100vh;
+  background: var(--primaryColor);
+  color: var(--mainWhite);
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  /* il banner sta ora al centro, ma non il testo al suo interno */
+}
+
+.hero-banner p {
+  /* per evitare che p si allunghi oltre quando lo schermo diventa grande */
+  width: 80%;
+  /* con max-width il testo si adatta a schermo piccolo e non si allunga su schermo grande */
+  max-width: 560px;
+  font-size: 1rem;
+}
+
+/* proprietà da applicare finchè non si superano i 600px */
+@media screen and (max-width: 600px) {
+  .hero-banner {
+    padding: 0 3rem;
+  }
+}
+
+/* schermi grandi */
+@media screen and (min-width: 768px) {
+  .hero-header {
+    background: linear-gradient(rgba(241, 80, 37, 0.75), rgba(0, 0, 0, 0.75)),
+      url("../img/image-2.jpeg") center/cover fixed no-repeat;
+  }
+}
+
+/* 
+============
+Cards Styles
+============
+*/
+.title {
+  text-align: center;
+}
+
+.cards {
+  padding: 4rem 0;
+}
+
+.cards-center {
+  width: 80vw;
+  max-width: 1170px;
+  margin: 2rem auto;
+}
+
+.card {
+  border: 1px solid var(--darkGrey);
+  /* non hanno il border bottom perchè non si vede, aggiungo margin */
+  margin-bottom: 3rem;
+  transition: var(--mainTransition);
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card-info {
+  padding: 1rem;
+}
+
+.card-footer {
+  background: var(--darkGrey);
+  padding: 0.5rem 1rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* li metto al centro della colonna */
+  justify-items: center;
+}
+
+.card-footer span {
+  color: var(--primaryColor);
+  cursor: pointer;
+  font-size: 1.3rem;
+  transition: var(--mainTransition);
+}
+
+.card-footer span:hover {
+  color: var(--mainBlack);
+  transform: rotateY(360deg);
+  /* scale(1.3) */
+}
+
+/* ora devo impostare le colonne -> 2 colonne */
+/* @media screen and (min-width: 768px) {
+  .cards-center {
+    display: grid;
+    grid-template-columns: 1fr 1fr; */
+/* il margin bottom è già impostato, ma con queste due proprietà ora i due elementi affiancati in colonna sono attaccati -> gap */
+/* column-gap: 2rem;
+  }
+} */
+
+/* schermi grandi -> 3 colonne. Cancello le proprietà che vengono ereditate da min-width sopra */
+/* @media screen and (min-width: 1170px) {
+  .cards-center {
+    grid-template-columns: repeat(3, 1fr);
+  }
+} */
+
+/* ora reimposto tutto SENZA usare le media queries
+ricordo, devo prendere le width per impostare min e max width e in base a queste misure decido quante colonne avere.
+esempio. ora voglio creare layout su 3 colonne e la mia max-width è 1170px (impostata). devo dosare anche il gap. ho 3 colonne, ci stanno due gap in mezzo.
+se avessi 4 colonne, ci stanno 3 gap in mezzo.
+sappiamo che 1rem = 16px. per layout a 3 colonne, il gap tra queste sarà 32px (ho due gap, 16 * 2). -> totale gap = 32*2 -> 64px. 
+Quanto sarà la width di una colonna? -> so che max-width impostata è 1170px e conosco il gap totale e il numero di colonne desiderate
+(1170 - 64)/3 ->-> (width - gap totale)/numero colonne -> 368,666...
+Se ispeziono il lavoro già fatto, e punto su una card, vedo che la width della card (colonna) è proprio quella cifra.
+ora commento le media queries e procedo.
+*/
+.cards-center {
+  display: grid;
+  /* tra ogni colonna ci devono essere 32px di gap */
+  column-gap: 2rem;
+  /* 3, 1fr -> */
+  /* grid-template-columns: repeat(auto-fit, minmax(368px, 1fr)); */
+  /* THREE COLUMN layout */
+  grid-template-columns: repeat(auto-fill, minmax(368px, 1fr));
+  /* FOUR COLUMN layout */
+  grid-template-columns: repeat(auto-fill, minmax(268.5px, 1fr));
+  /* ora, quando non c'è abbastanza spazio per disporre gli elementi in colonna, inizia una nuova riga, adattandosi
+  non posso avere più di 3 elementi in colonna perchè ci sono min e max width impostate */
+}
+
+/* autofill considera lo spazio disponibile per gli elementi e li ridispone secondo questo, lasciando eventualmente spazio per altre colonne se ce n'è
+autofit invece prende lo spazio disponibile. se avessi avuto una sola card, questa si sarebbe presa tutta la width per sè */
+
+/* non abbiamo lavorato con le row perchè il contenuto delle card è identico. modifico l'ultima card in html. 
+Ora tutte le card sono strane, hanno extra spazio bianco sotto perchè ogni card si stira a raggiungere la stessa height della card più lunga.
+si vedono le differenze meglio su display a 4 colonne */
+.card {
+  display: grid;
+  grid-template-columns: 1fr;
+  /* le card stanno in più colonne comunque. aggiungo row */
+  /* con auto dico semplicemente -> qualsiasi height ci sta, usala e adattati */
+  grid-template-rows: auto;
+  /* ora la quarta card con più contenuto ha ridotto lo spazio di footer e img per darlo al p che è più grande, ma tutte le card sono di nuovo della stessa height.
+  posso fare in modo che siano le altre card ad adattarsi all'height di quella più lunga */
+  grid-template-rows: auto 1fr auto;
+  /* al posto di auto posso mettere qualsiasi valore. ricordo che sto influenzando gli elementi dentro alla card, non le cards
+  posso vedere meglio con i tools di firefox
+  utile per dare diversi layout.
+  provo per esempio questo: 
+  .card -> grid-template-rows: 5rem 1fr auto;
+  .card img -> height: 100%;
+  */
+}
+
+/* 
+============
+Tiles Styles
+============
+*/
+.tiles {
+  padding: 4rem 0;
+}
+
+.tiles-center {
+  width: 90vw;
+  max-width: 1170px;
+  margin: 2rem auto;
+  display: grid;
+  row-gap: 2rem;
+}
+
+/* 2 column layout */
+@media screen and (min-width: 768px) {
+  .tiles-center {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2rem;
+  }
+}
+
+/* 3 column layout */
+@media screen and (min-width: 992px) {
+  .tiles-center {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* 4 column layout */
+@media screen and (min-width: 1170px) {
+  .tiles-center {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 200px);
+    /* ho 4 colonne, 5 righe. posso chiamare le aree come voglio */
+    grid-template-areas:
+      "a a a b"
+      "a a a c"
+      "d d d d"
+      "e f f f"
+      "e g h i";
+    /* ancora non abbiamo assegnato valori. Ogni img ha una sua propria classe e devo assegnare queste a una particolare area */
+  }
+  .tiles img {
+    height: 100%;
+    object-fit: cover;
+  }
+  .tile-1 {
+    grid-area: a;
+  }
+  .tile-2 {
+    grid-area: b;
+  }
+  .tile-3 {
+    grid-area: c;
+  }
+  .tile-4 {
+    grid-area: d;
+  }
+  .tile-5 {
+    grid-area: e;
+  }
+  .tile-6 {
+    grid-area: f;
+  }
+  .tile-7 {
+    grid-area: g;
+  }
+  .tile-8 {
+    grid-area: h;
+  }
+  .tile-9 {
+    grid-area: i;
+  }
+  /* c'è un problema, ora si sormontano e sono posizionati in modo strano. devo modificare tiles img  */
+}
+
+/* 
+============
+Layout Styles
+============
+*/
+.header {
+  background: var(--primaryColor);
+  color: var(--mainWhite);
+  text-align: center;
+  padding: 0.5rem 0;
+}
+
+.header h2 {
+  font-weight: 400;
+}
+
+.navbar {
+  background: var(--darkGrey);
+}
+
+.navbar li {
+  list-style-type: none;
+}
+
+.navbar a {
+  padding: 1rem;
+  display: inline-block;
+  text-transform: capitalize;
+  letter-spacing: var(--mainSpacing);
+  font-size: 1.2rem;
+  color: var(--mainBlack);
+  transition: var(--mainTransition);
+}
+
+.navbar a:hover {
+  color: var(--mainWhite);
+}
+
+.content {
+  padding: 2rem;
+}
+
+.content {
+  font-size: 1rem;
+}
+
+.sidebar {
+  background: var(--primaryColor);
+  padding: 1rem 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  color: var(--mainWhite);
+  font-size: 1.2rem;
+}
+
+.footer {
+  background: var(--mainBlack);
+  color: var(--mainWhite);
+  text-align: center;
+  text-transform: capitalize;
+  padding: 0.5rem 0;
+}
+
+.footer p {
+  font-size: 1rem;
+}
+
+.main {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto 1fr auto auto;
+}
+
+.sidebar i {
+  transition: var(--mainTransition);
+  cursor: pointer;
+}
+
+.sidebar i:hover {
+  color: var(--mainBlack);
+  /* transform: rotateY(360deg); */
+  transform: scale(1.3);
+}
+
+@media screen and (min-width: 768px) {
+  .navbar ul {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-items: center;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .main {
+    grid-template-columns: [start] 200px [col-1-end] 1fr [col-2-end] 50px [end];
+    grid-template-rows: [start] auto [row-1-end] 1fr [row-2-end] auto [end];
+  }
+  .header {
+    grid-column: start/end;
+    grid-row: start/row-1-end;
+    /* ora stanno allineati in cima sulla prima riga tutti e 4 i link */
+  }
+  .navbar {
+    grid-column: start/col-1-end;
+    grid-row: row-1-end/row-2-end;
+    /* ancora non è apposto */
+  }
+  .content {
+    grid-column: col-1-end/col-2-end;
+    grid-row: row-1-end/row-2-end;
+  }
+  .sidebar {
+    grid-column: col-2-end/end;
+    grid-row: row-1-end/row-2-end;
+    /* guardo come è cambiato il layout */
+    /* gli elementi sono posizionati, vanno adattati e ridimensionati */
+  }
+  .footer {
+    grid-column: start/end;
+    grid-row: row-2-end/end;
+  }
+  .navbar ul {
+    grid-template-columns: 1fr;
+    align-items: center;
+    min-height: 100%;
+  }
+  .sidebar {
+    grid-template-columns: 1fr;
+    align-items: center;
+    min-height: 100%;
+    background: var(--darkGrey);
+  }
+}
